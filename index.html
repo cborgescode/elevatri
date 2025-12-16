@@ -1,70 +1,557 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elevatri — BookSlide</title>
-<link rel="icon" href="elevatri.logo.png" />
-<style>
-:root { --text:#0a0a0a; --muted:#666; --line:#eaeaea; }
-* { box-sizing: border-box; }
-body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:#fff; }
-header { display:flex; justify-content:space-between; align-items:center; padding:28px 40px; border-bottom:1px solid var(--line); }
-header img { height:32px; }
-nav a { margin-left:28px; text-decoration:none; color:var(--text); font-weight:500; }
-.hero { max-width:900px; margin:0 auto; padding:120px 20px; text-align:center; animation:fade 1s ease; }
-.hero h1 { font-size:64px; margin:0 0 20px; letter-spacing:-1px; }
-.hero p { font-size:22px; color:var(--muted); margin:0 auto 40px; }
-.cta { display:inline-block; padding:14px 36px; border-radius:14px; border:1px solid #ccc; text-decoration:none; color:#000; font-size:18px; transition:background .2s; }
-.cta:hover { background:#f2f2f2; }
-.features { max-width:1100px; margin:120px auto; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:64px; }
-.feature { text-align:center; animation:fadeUp .8s ease; }
-.feature h3 { font-size:26px; margin-bottom:12px; }
-.feature p { font-size:18px; color:var(--muted); }
-footer { border-top:1px solid var(--line); padding:60px 20px; text-align:center; font-size:15px; color:var(--muted); }
-footer a { color:var(--muted); text-decoration:none; margin:0 12px; }
-@keyframes fade { from{opacity:0} to{opacity:1} }
-@keyframes fadeUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
-@media(max-width:700px){ .hero h1{font-size:42px} .hero p{font-size:18px} }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elevatri — BookSlide</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="elevatri.logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --line: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--line);
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand img {
+      height: 28px; /* Tamaño normal del logo */
+      width: auto;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 20px 80px;
+      text-align: center;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      margin: 0; /* remove default spacing above/below */
+      line-height: 1; /* collapse extra line spacing */
+      letter-spacing: -0.02em;
+    }
+
+    .hero-logo {
+      height: 95px;
+      width: auto;
+      display: block;
+      margin: 1px auto 0; /* place below title with some spacing */
+      flex-shrink: 0;
+    }
+
+    .hero-heading {
+      display: flex;
+      flex-direction: column; /* stack: title+subtitle, then logo */
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: auto;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* center title+subtitle vertically relative to logo */
+      text-align: center;
+      min-height: 0;
+      gap: 4px;
+    }
+
+    .hero-title h1 {
+      margin: 0;
+      /* Ensure no extra gap under the title */
+      margin-bottom: 0;
+    }
+
+    .hero-subtitle {
+      max-width: 720px;
+      /* Tighten vertical spacing so subtitle sits right under the title */
+      margin: 4px auto 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    .hero-desc {
+      max-width: 720px;
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: 1rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 460px) {
+      .hero-heading {
+        flex-direction: column;
+      }
+      .hero-logo {
+        height: 56px;
+        margin-bottom: 12px;
+        margin-right: 0;
+      }
+      .hero-title {
+        align-items: center;
+        min-height: 56px;
+      }
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 36px;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .hero .cta {
+      display: inline-block;
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 500;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .hero .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37,99,235,0.25);
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      max-width: 700px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 36px;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Language menu in nav */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-links a,
+    .nav-links button.nav-link {
+      margin-left: 20px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      padding: 6px 8px;
+    }
+
+    .nav-links button.nav-link:hover,
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .lang-menu {
+      position: relative;
+    }
+
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .lang-btn:hover {
+      color: var(--text);
+      border-color: var(--line);
+      box-shadow: 0 6px 18px rgba(16,24,40,0.04);
+    }
+
+    .lang-menu-list {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(16,24,40,0.08);
+      min-width: 160px;
+      overflow: hidden;
+      z-index: 50;
+    }
+
+    .lang-menu-list button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .lang-menu-list button:hover {
+      background: rgba(37,99,235,0.06);
+      color: var(--text);
+    }
+
+    /* Selected language style */
+    .lang-menu-list button.selected {
+      background: rgba(37,99,235,0.08);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .lang-menu-list button::after {
+      content: '';
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+
+    .lang-menu-list button.selected::after {
+      content: '✓';
+      color: var(--accent);
+      opacity: 1;
+      margin-left: 12px;
+      font-weight: 700;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-<header>
-<img src="elevatri.logo.png" alt="Elevatri logo" />
-<nav>
-<a href="#features">Funciones</a>
-<a href="privacy.html">Privacidad</a>
-<a href="support.html">Soporte</a>
-</nav>
-</header>
 
+  <!-- ...existing code... -->
 
-<section class="hero">
-<h1>BookSlide</h1>
-<p>La app de Elevatri para explorar EPUB de forma fluida. Capítulos, párrafos e imágenes organizados directamente en tu dispositivo.</p>
-<a class="cta" href="#">Disponible próximamente en App Store</a>
-</section>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <img src="elevatri.logo.png" alt="Elevatri logo" />
+        Elevatri
+      </div>
+      <div class="nav-links">
+        <a href="support.html" data-lang="en" style="display: none;">Support</a>
+        <a href="support.html" data-lang="es">Soporte</a>
 
+        <a href="privacy.html" data-lang="en" style="display: none;">Privacy</a>
+        <a href="privacy.html" data-lang="es">Privacidad</a>
 
-<section id="features" class="features">
-<div class="feature">
-<h3>Lectura inteligente</h3>
-<p>Desglose automático del contenido para una navegación clara y natural.</p>
-</div>
-<div class="feature">
-<h3>Diseño fluido</h3>
-<p>Interacciones suaves inspiradas en la experiencia iOS.</p>
-</div>
-<div class="feature">
-<h3>Privacidad total</h3>
-<p>No recopilamos ni transmitimos datos. Todo ocurre localmente.</p>
-</div>
-</section>
+        <div class="lang-menu" id="langMenu">
+          <button class="lang-btn nav-link" id="langBtn" aria-expanded="false" aria-haspopup="true">Idioma (Español) ▾</button>
+          <div class="lang-menu-list" id="langMenuList" style="display: none;">
+            <button data-lang="es">Español</button>
+            <button data-lang="en">English</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
+  <main>
+    <div class="hero">
+      <div class="hero-heading">
+        <div class="hero-title">
+          <h1 data-lang="en" style="display: none;">BookSlide</h1>
+          <h1 data-lang="es">BookSlide</h1>
+          <p class="hero-subtitle" data-lang="en" style="display: none;">A better way to experience books.</p>
+          <p class="hero-subtitle" data-lang="es">Una mejor forma de disfrutar los libros.</p>
+        </div>
+        <img src="BookSlide.logo.png" alt="BookSlide logo" class="hero-logo" />
+      </div>
+      <p class="hero-desc" data-lang="en" style="display: none;">BookSlide transforms your EPUB books into an intuitive, narrated reading experience — designed to be easy to follow, accessible, and enjoyable.</p>
+      <p class="hero-desc" data-lang="es">BookSlide transforma tus libros EPUB en una experiencia de lectura narrada e intuitiva, diseñada para ser fácil de seguir, accesible y agradable.</p>
+      
+    </div>
 
-<footer>
-© <span id="y"></span> Elevatri · <a href="privacy.html">Privacy Policy</a> · <a href="support.html">Support</a>
-</footer>
-<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+    <section>
+      <h2 class="section-title" data-lang="en" style="display: none;">Narration designed to follow the content</h2>
+      <h2 class="section-title" data-lang="es">Narración pensada para seguir el contenido</h2>
+      <p class="section-desc" data-lang="en" style="display: none;">
+        BookSlide preprocesses your DRM-free EPUB books to deliver a smoother reading and listening experience, keeping you oriented at all times.
+      </p>
+      <p class="section-desc" data-lang="es">
+        BookSlide preprocesa tus libros EPUB sin DRM para ofrecer una experiencia de lectura y escucha más fluida, manteniéndote orientado en todo momento.
+      </p>
+
+      <div class="features">
+        <div class="feature">
+          <h3 data-lang="en">A sliding reading experience</h3>
+          <h3 data-lang="es" style="display:none;">Lectura que fluye mientras escuchas</h3>
+          <p data-lang="en" style="display:none;">
+            Content flows naturally as you listen. Paragraphs, tables, and images slide into view, keeping the current and next section always visible.
+          </p>
+          <p data-lang="es">
+            El contenido fluye de forma natural mientras escuchas. Los párrafos, tablas e imágenes se deslizan en pantalla, manteniendo siempre visible la sección actual y la siguiente.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3 data-lang="en" style="display:none;">Full control over what you listen to</h3>
+          <h3 data-lang="es">Control total sobre lo que escuchas</h3>
+          <p data-lang="en" style="display:none;">
+            BookSlide lets you choose which chapters and paragraphs are included in the narration. You can include or skip sections like the table of contents, indexes, or footnotes, giving you full control over the flow and pacing of the reading and listening experience.
+          </p>
+          <p data-lang="es">
+            BookSlide te permite elegir qué capítulos y párrafos se incluyen en la narración. Puedes incluir o saltar secciones como la tabla de contenido, índices o pies de nota, teniendo control total sobre el flujo y el ritmo de la lectura y escucha.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3 data-lang="en" style="display:none;">Smart table narration</h3>
+          <h3 data-lang="es">Narración inteligente de tablas</h3>
+          <p data-lang="en" style="display:none;">
+            When a book includes tables, BookSlide explains them intelligently by using the headers to describe each data point. This way, you can understand the information even when you’re only listening, without losing context.
+          </p>
+          <p data-lang="es">
+            Cuando un libro incluye tablas, BookSlide las explica de forma inteligente, usando los encabezados para describir cada dato. Así, incluso solo escuchando, puedes entender la información sin perder contexto.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3 data-lang="en" style="display:none;">Images that speak</h3>
+          <h3 data-lang="es">Imágenes que hablan</h3>
+          <p data-lang="en" style="display:none;">
+            BookSlide detects the text within images and seamlessly integrates it into the narration, so the experience remains complete even when you’re only listening.
+          </p>
+          <p data-lang="es">
+            BookSlide detecta el texto presente en las imágenes y lo integra de forma natural en la narración, para que la experiencia sea completa incluso solo escuchando.
+          </p>
+        </div>
+
+        <div class="feature">
+          <h3 data-lang="en" style="display:none;">Privacy-first by design</h3>
+          <h3 data-lang="es">Privacidad desde el diseño</h3>
+          <p data-lang="en" style="display:none;">
+            All processing happens on your device. BookSlide does not collect, track, or transmit personal data outside your phone.
+          </p>
+          <p data-lang="es">
+            Todo el procesamiento ocurre en tu dispositivo. BookSlide no recopila, rastrea ni transmite datos personales fuera de tu dispositivo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title" data-lang="en" style="display: none;">Designed by Elevatri</h2>
+      <h2 class="section-title" data-lang="es">Diseñado por Elevatri</h2>
+      <p class="section-desc" data-lang="en" style="display: none;">
+        Elevatri develops applications designed to make the way people consume and interact with content clearer and more enjoyable.
+      </p>
+      <p class="section-desc" data-lang="es">
+        Elevatri desarrolla aplicaciones pensadas para hacer más clara y agradable la forma de consumir e interactuar con el contenido.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Elevatri · 
+    <a href="privacy.html" data-lang="en" style="display: none;">Privacy Policy</a>
+    <a href="privacy.html" data-lang="es">Política de Privacidad</a>
+    · 
+    <a href="support.html" data-lang="en" style="display: none;">Support</a>
+    <a href="support.html" data-lang="es">Soporte</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const elements = document.querySelectorAll('[data-lang]');
+
+    // Set initial language to Spanish
+    const setLanguage = (lang) => {
+      elements.forEach(el => {
+        // Don't touch language menu controls themselves
+        if (el.closest && el.closest('#langMenu')) return;
+
+        if (el.getAttribute('data-lang') === lang) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      // Update button label
+      const langBtn = document.getElementById('langBtn');
+      if (langBtn) {
+        langBtn.textContent = lang === 'es' ? 'Idioma (Español) ▾' : 'Idioma (English) ▾';
+      }
+      // Highlight selected language in the menu (if present)
+      const menuButtons = document.querySelectorAll('#langMenuList button[data-lang]');
+      if (menuButtons && menuButtons.length) {
+        menuButtons.forEach(b => {
+          if (b.getAttribute('data-lang') === lang) b.classList.add('selected'); else b.classList.remove('selected');
+        });
+      }
+    };
+
+    // Load saved language if any
+    const saved = (function(){ try { return localStorage.getItem('site-lang'); } catch(e){ return null } })();
+    setLanguage(saved || 'es'); // Default to Spanish
+
+    // Language menu behavior
+    const langBtn = document.getElementById('langBtn');
+    const langMenuList = document.getElementById('langMenuList');
+
+    const closeLangMenu = () => {
+      langMenuList.style.display = 'none';
+      langBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    const openLangMenu = () => {
+      langMenuList.style.display = '';
+      langBtn.setAttribute('aria-expanded', 'true');
+    };
+
+    if (langBtn && langMenuList) {
+      langBtn.addEventListener('click', (e) => {
+        const isOpen = langBtn.getAttribute('aria-expanded') === 'true';
+        if (isOpen) closeLangMenu(); else openLangMenu();
+      });
+
+      // Choose language from list
+      // Choose language from list and save preference
+      langMenuList.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-lang]');
+        if (!btn) return;
+        const selected = btn.getAttribute('data-lang');
+        try { localStorage.setItem('site-lang', selected); } catch(e) { /* ignore */ }
+        setLanguage(selected);
+        closeLangMenu();
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!document.getElementById('langMenu').contains(e.target)) {
+          closeLangMenu();
+        }
+      });
+    }
+  </script>
+
 </body>
 </html>
